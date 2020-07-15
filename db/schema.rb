@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_07_15_153002) do
   enable_extension "plpgsql"
 
   create_table "stations", force: :cascade do |t|
-    t.integer "station_id"
+    t.string "station_id"
     t.string "name"
     t.float "lat"
     t.float "lon"
