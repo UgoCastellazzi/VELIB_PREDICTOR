@@ -20,6 +20,6 @@ class CreateStationsJob < ApplicationJob
         }
       )
     end
-    # Do something later
+    # Do something
   end
 end
