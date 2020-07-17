@@ -4,7 +4,8 @@ class PagesController < ApplicationController
     @markers = Station.all.map do |station|
       {
         lat: station.lat,
-        lon: station.lon
+        lon: station.lon,
+        avg0: station.capacity
       }
     end
   end
