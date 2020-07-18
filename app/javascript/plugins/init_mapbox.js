@@ -6,11 +6,28 @@ const fitMapToMarkers = (map, markers) => {
     map.fitBounds(bounds, { padding: 20, maxZoom: 15, duration: 0 });
 };
 
-const changeMarkerOnZoom = (zoomLevel, markers) => {
+const changeMarkerOnZoom = (zoomLevel, markers, map) => {
   if (zoomLevel < 13) {
     console.log("large");
+      const popups = document.querySelectorAll(".mapboxgl-popup");
+      popups.forEach((popup) => {
+        popup.remove();
+      });
   } else {
     console.log("close");
+    const neLng = map.getBounds()["_ne"].lng;
+    const neLat = map.getBounds()["_ne"].lat;
+    const swLng = map.getBounds()["_sw"].lng;
+    const swLat = map.getBounds()["_sw"].lat;
+    console.log(neLng, neLat, swLng, swLat);
+    markers.forEach((marker) => {
+      if ( swLng < marker.lon && marker.lon < neLng && marker.lat > swLat && marker.lat < neLat) {
+        const popup = new mapboxgl.Popup({ closeOnClick: false })
+        .setLngLat([ marker.lon, marker.lat ])
+        .setHTML(`<p class="popup">${marker.avg0}</p>`)
+        .addTo(map);
+      };
+    });
   }
 };
 
@@ -32,23 +49,16 @@ const initMapbox = () => {
       element.style.width = "5px";
       element.style.height = "5px";
       element.style.fontSize = '0.5rem';
-      // const element = document.createElement('p');
-      // element.className = 'marker';
-      // element.innerText = marker.avg0;
-      // element.style.color = "blue";
-      // element.style.fontSize = '0.5rem';
       new mapboxgl.Marker(element)
         .setLngLat([ marker.lon, marker.lat ])
         .addTo(map);
     });
     map.on('zoomend', function() {
       const zoomLevel = map.getZoom();
-      changeMarkerOnZoom(zoomLevel);
-      });
+      changeMarkerOnZoom(zoomLevel, markers, map);
+    });
     fitMapToMarkers(map, markers);
   }
 };
 
 export { initMapbox }
-
-// afficher les chiffres via des popups, les cacher quand on est pas assez zommés
