@@ -6,12 +6,10 @@ const removePopups = () => {
   popups.forEach((popup) => {
     popup.remove();
   });
-  console.log("removed popups");
 };
 
 const addPopupsInBox = (markers, map) => {
   removePopups();
-  console.log("from add popups in box");
   const neLng = map.getBounds()["_ne"].lng;
   const neLat = map.getBounds()["_ne"].lat;
   const swLng = map.getBounds()["_sw"].lng;
@@ -56,8 +54,7 @@ const initMapbox = () => {
     });
     map.on('moveend', function() {
       const zoomLevel = map.getZoom();
-      console.log(zoomLevel);
-      if (zoomLevel < 15) {
+      if (zoomLevel < 14.5) {
         removePopups();
       } else {
         addPopupsInBox(markers, map);

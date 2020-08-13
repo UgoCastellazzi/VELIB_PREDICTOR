@@ -1,1 +1,25 @@
 // Specific CSS for your home-page
+h1 {
+  color: $title;
+  font-family: Roboto;
+}
+
+p {
+  color: $paragraph;
+  font-family: Roboto;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .global-container {
+    height: 100vh;
+  }
+
+  #map {
+    height: 75%;
+  }
+}

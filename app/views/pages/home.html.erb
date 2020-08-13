@@ -1,7 +1,11 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-
-<div id="map" style="height: 600px; width: 1200px" 
+<div class="global-container container mt-3 d-flex flex-column align-items-center">
+  <h1 class="mt-4">Vélib Foresee</h1>
+  <p class="mt-2">Choisissez une heure</p>
+  <div class="mt-4" id="map"
     data-markers="<%= @markers.to_json %>"
     data-center="<%= @marker_center.to_json %>"
     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+</div>
+
+
+
