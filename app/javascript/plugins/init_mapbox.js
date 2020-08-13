@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl';
+import { createMarker, createPopup } from './generate_html'
 
 
 const removePopups = () => {
@@ -18,7 +19,7 @@ const addPopupsInBox = (markers, map) => {
     if ( swLng < marker.lon && marker.lon < neLng && marker.lat > swLat && marker.lat < neLat) {
       const popup = new mapboxgl.Popup({ closeOnClick: false })
       .setLngLat([ marker.lon, marker.lat ])
-      .setHTML(`<p class="popup">${marker.avg0}</p>`)
+      .setHTML(createPopup(7, 8))
       .addTo(map);
     };
   });
@@ -43,11 +44,7 @@ const initMapbox = () => {
     const markers = JSON.parse(mapElement.dataset.markers);
     markers.forEach((marker) => {
       const element = document.createElement('div');
-      element.className = 'marker';
-      element.style.backgroundColor = "blue";
-      element.style.width = "5px";
-      element.style.height = "5px";
-      element.style.fontSize = '0.5rem';
+      createMarker(element);
       new mapboxgl.Marker(element)
         .setLngLat([ marker.lon, marker.lat ])
         .addTo(map);
