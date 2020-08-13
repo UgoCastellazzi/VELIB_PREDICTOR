@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_153002) do
+ActiveRecord::Schema.define(version: 2020_08_13_102101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,14 +22,20 @@ ActiveRecord::Schema.define(version: 2020_07_15_153002) do
     t.float "lon"
     t.integer "capacity"
     t.integer "code"
-    t.integer "avg0"
-    t.integer "avg4"
-    t.integer "avg8"
-    t.integer "avg12"
-    t.integer "avg16"
-    t.integer "avg20"
+    t.text "avg0"
+    t.text "avg4"
+    t.text "avg8"
+    t.text "avg12"
+    t.text "avg16"
+    t.text "avg20"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "avg2"
+    t.text "avg6"
+    t.text "avg10"
+    t.text "avg14"
+    t.text "avg18"
+    t.text "avg22"
   end
 
 end
