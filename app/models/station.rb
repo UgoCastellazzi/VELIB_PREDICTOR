@@ -11,4 +11,10 @@ class Station < ApplicationRecord
   serialize :avg18, Array
   serialize :avg20, Array
   serialize :avg22, Array
+
+  def compute_average(hour)
+    data = self["#{hour}"]
+    average = data.inject{ |sum, el| sum + el }.to_f / data.size
+    average.round
+  end
 end
