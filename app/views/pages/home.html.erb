@@ -1,11 +1,15 @@
 <div class="global-container container mt-3 d-flex flex-column align-items-center">
   <h1 class="mt-4">Vélib Foresee</h1>
-  <p class="mt-2">Choisissez une heure</p>
-  <select id="hour-input" class="select2">
-    <option selected="selected">
-    00h
-    </option>
-  </select>
+  <div class="d-flex align-items-center">
+    <p class="pb-0 mb-0 mr-2">Choisissez une heure </p>
+    <span>
+      <select id="hour-input" class="select2">
+        <option selected="selected">
+          00h
+        </option>
+    </select>
+    </span>
+  </div>
   <div class="mt-4" id="map"
     data-markers="<%= @markers.to_json %>"
     data-center="<%= @marker_center.to_json %>"
