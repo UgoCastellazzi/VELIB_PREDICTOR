@@ -1,6 +1,9 @@
 import mapboxgl from 'mapbox-gl';
 import { createMarker, createPopup } from './generate_html'
+import { matchHours } from './match_hours'
+import { getUserInput } from './init_select2'
 
+const select = document.getElementById("hour-input");
 
 const removePopups = () => {
   const popups = document.querySelectorAll(".mapboxgl-popup");
@@ -11,6 +14,8 @@ const removePopups = () => {
 
 const addPopupsInBox = (markers, map) => {
   removePopups();
+  const userInput = getUserInput();
+  const userInputTranslated = matchHours[`${userInput}`]
   const neLng = map.getBounds()["_ne"].lng;
   const neLat = map.getBounds()["_ne"].lat;
   const swLng = map.getBounds()["_sw"].lng;
@@ -19,7 +24,7 @@ const addPopupsInBox = (markers, map) => {
     if ( swLng < marker.lon && marker.lon < neLng && marker.lat > swLat && marker.lat < neLat) {
       const popup = new mapboxgl.Popup({ closeOnClick: false })
       .setLngLat([ marker.lon, marker.lat ])
-      .setHTML(createPopup(7, 8))
+      .setHTML(createPopup(marker[`current_${userInputTranslated}`], marker["capacity"]))
       .addTo(map);
     };
   });
@@ -55,10 +60,13 @@ const initMapbox = () => {
         removePopups();
       } else {
         addPopupsInBox(markers, map);
+        $('#hour-input').on('change', function () {
+          addPopupsInBox(markers, map);
+        });
       }
     });
     fitMapToMarkers(map, markers);
   }
 };
 
-export { initMapbox }
+export { initMapbox };

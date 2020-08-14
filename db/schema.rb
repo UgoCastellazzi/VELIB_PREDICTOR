@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_102101) do
+ActiveRecord::Schema.define(version: 2020_08_14_073046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 2020_08_13_102101) do
     t.text "avg14"
     t.text "avg18"
     t.text "avg22"
+    t.integer "current_avg0"
+    t.integer "current_avg2"
+    t.integer "current_avg4"
+    t.integer "current_avg6"
+    t.integer "current_avg8"
+    t.integer "current_avg10"
+    t.integer "current_avg12"
+    t.integer "current_avg14"
+    t.integer "current_avg16"
+    t.integer "current_avg18"
+    t.integer "current_avg20"
+    t.integer "current_avg22"
   end
 
 end
