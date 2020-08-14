@@ -14,6 +14,7 @@ def update_avg(avg)
     else
       station_to_update["#{avg}"] << station['num_bikes_available']
     end
+    station_to_update["current_#{avg}"] = station_to_update.compute_average("#{avg}")
     station_to_update.save
   end
 end
