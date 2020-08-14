@@ -1,5 +1,4 @@
 const createMarker = (element) => {
-  console.log("createmarker");
   element.className = 'marker';
   element.style.backgroundColor = "#59B0E3";
   element.style.width = "3px";
