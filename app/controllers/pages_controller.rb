@@ -6,6 +6,7 @@ class PagesController < ApplicationController
       {
         lat: station.lat,
         lon: station.lon,
+        infoWindow: render_to_string(partial: "info_window", locals: { station: station }),
         capacity: station.capacity,
         current_avg0: station.current_avg0,
         current_avg2: station.current_avg2,
