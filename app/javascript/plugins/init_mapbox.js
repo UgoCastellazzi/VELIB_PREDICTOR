@@ -1,40 +1,5 @@
 import mapboxgl from 'mapbox-gl';
-import { createMarker, createPopup } from './generate_html'
-import { matchHours } from './match_hours'
-import { getUserInput } from './init_select2'
-
-const select = document.getElementById("hour-input");
-
-const removePopups = () => {
-  const popups = document.querySelectorAll(".mapboxgl-popup");
-  popups.forEach((popup) => {
-    popup.remove();
-  });
-};
-
-const addPopupsInBox = (markers, map) => {
-  removePopups();
-  const userInput = getUserInput();
-  const userInputTranslated = matchHours[`${userInput}`]
-  const neLng = map.getBounds()["_ne"].lng;
-  const neLat = map.getBounds()["_ne"].lat;
-  const swLng = map.getBounds()["_sw"].lng;
-  const swLat = map.getBounds()["_sw"].lat;
-  markers.forEach((marker) => {
-    if ( swLng < marker.lon && marker.lon < neLng && marker.lat > swLat && marker.lat < neLat) {
-      const popup = new mapboxgl.Popup({ closeOnClick: false })
-      .setLngLat([ marker.lon, marker.lat ])
-      .setHTML(createPopup(marker[`current_${userInputTranslated}`], marker["capacity"]))
-      .addTo(map);
-    };
-  });
-};
-
-const fitMapToMarkers = (map, markers) => {
-    const bounds = new mapboxgl.LngLatBounds();
-    markers.forEach(marker => bounds.extend([ marker.lon, marker.lat ]));
-    map.fitBounds(bounds, { padding: 20, maxZoom: 15, duration: 0 });
-};
+import { removePopups, addPopupsInBox, addMarkersToMap } from './manage_map_elements'
 
 const initMapbox = () => {
   const mapElement = document.getElementById('map');
@@ -43,29 +8,26 @@ const initMapbox = () => {
     mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v10'
+      style: 'mapbox://styles/mapbox/streets-v10',
+      center: [2.3454, 48.8549], // starting position [lng, lat]
+      zoom: 15 // starting zoom
     });
-
     const markers = JSON.parse(mapElement.dataset.markers);
-    markers.forEach((marker) => {
-      const element = document.createElement('div');
-      createMarker(element);
-      new mapboxgl.Marker(element)
-        .setLngLat([ marker.lon, marker.lat ])
-        .addTo(map);
-    });
+    addMarkersToMap(markers, map);
+    addPopupsInBox(markers, map);
     map.on('moveend', function() {
       const zoomLevel = map.getZoom();
       if (zoomLevel < 14.5) {
         removePopups();
+        addMarkersToMap(markers, map);
       } else {
         addPopupsInBox(markers, map);
+        addMarkersToMap(markers, map);
         $('#hour-input').on('change', function () {
           addPopupsInBox(markers, map);
         });
       }
     });
-    fitMapToMarkers(map, markers);
   }
 };
 
