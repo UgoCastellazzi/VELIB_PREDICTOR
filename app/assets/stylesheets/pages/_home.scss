@@ -2,6 +2,7 @@
 h1 {
   color: $title;
   font-family: Roboto;
+  text-align: center;
 }
 
 p {
@@ -21,5 +22,9 @@ p {
 
   #map {
     height: 80%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
   }
 }
