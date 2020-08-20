@@ -61,5 +61,14 @@ const addMarkersToMap = (markers, map) => {
   });
 };
 
-export { removePopups, addPopupsInBox, addMarkersToMap }
+const managePopups = (markers, map) => {
+  const zoomLevel = map.getZoom();
+    if (zoomLevel < 14.5) {
+      removePopups();
+   } else {
+      addPopupsInBox(markers, map);
+  }
+}
+
+export { removePopups, addPopupsInBox, addMarkersToMap, managePopups }
   
